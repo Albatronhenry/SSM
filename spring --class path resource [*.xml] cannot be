@@ -2,7 +2,9 @@
 
 ****  class path resource [applicationContext.xml] cannot be opened because it does not exist
 
-****  solve  way is add * after classpath
+**** 
+reference website-->http://blog.csdn.net/grwgwef/article/details/48521309
+solve  way is add * after classpath
 
 
 ----------------------------------------------------------
