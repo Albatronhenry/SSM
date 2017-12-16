@@ -1,4 +1,4 @@
-# SSM
+###SSM-BeanFactory和ApplicationContext的区别
 
   * BeanFactory               -- BeanFactory采取延迟加载，第一次getBean时才会初始化Bean
         * ApplicationContext        -- 在加载applicationContext.xml时候就会创建具体的Bean对象的实例，还提供了一些其他的功能
@@ -23,6 +23,7 @@
 		  ApplicationContext包含BeanFactory的所有功能。通常建议比BeanFactory优先，除非有一些限制的场合如字节长度对内存有很大的影（Applet）.然后，绝大多数"典型的"企业应用和系统，ApplicationContext就是你需要使用的。
 		  Spring2.0及以上版本，大量使用了link  linkend="beans-factory-extension-bpp">BeanPostProcessor扩展（以便应用代理等功能），
 		  如果你选择BeanFactory则无法使用相当多的支持功能，如事务和AOP，这可能会导致混乱，因为配置并没有错误。
+		  
  3.一个简单的例子来证明BeanFactory和ApplicationContext主要区别
 
     搭建工程的环境就不说了，直接上代码。
