@@ -1,4 +1,4 @@
-# SSM
+## SSM-class path resource [*.xml] cannot be 
 
 * class path resource [applicationContext.xml] cannot be opened because it does not exist
 
@@ -21,7 +21,7 @@ source code:
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	```
+```
 
 change code:
 			<param-value>classpath*:springmvc.xml</param-value>
