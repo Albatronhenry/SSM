@@ -108,10 +108,10 @@ ApplicationContext context=new ClassPathXmlApplicationContext("applicationContex
  
 
 BeanFactory测试结果：
-####什么都没显示
+#### 什么都没显示
 
 ApplicationContext测试结果：
-####实例化User
+#### 实例化User
  
 
 
