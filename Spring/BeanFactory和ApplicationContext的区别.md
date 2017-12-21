@@ -31,7 +31,7 @@
 1.首先创建一个实体类：User
 
 
-```
+```java
 public class User {
 
      public User(){
@@ -47,7 +47,7 @@ public class User {
 2.在创建一个ApplicationContext.xml文件
 
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -65,7 +65,7 @@ public class User {
  
 
 3.创建测试类
-```
+```java
 public class TestHappy {
 
  
@@ -93,7 +93,7 @@ BeanFactory beanFactory=new XmlBeanFactory(new ClassPathResource("applicationCon
  * ApplicationContext的测试
 
 
-```
+```java
 @Test
 
 public void applicationContextTest(){
