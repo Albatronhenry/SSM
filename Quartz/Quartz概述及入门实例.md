@@ -193,4 +193,4 @@ public class MyTest{
 
 运行结果如下：
 
-!(结果)[https://github.com/Albatronhenry/UploadFile/blob/master/pic/quartz_result.png]
+![结果](https://github.com/Albatronhenry/UploadFile/blob/master/pic/quartz_result.png)
