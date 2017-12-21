@@ -7,7 +7,7 @@
 
 
 source code:
-```
+```java
 	<servlet>
 		<servlet-name>crm</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
