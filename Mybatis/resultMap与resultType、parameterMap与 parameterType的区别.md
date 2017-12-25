@@ -1,4 +1,4 @@
- ### resultMap 与 resultType、parameterMap 与  parameterType的区别在面试的时候被问到的几率非常高
+ ### resultMap 与 resultType、parameterMap 与  parameterType的区别
 
 
 
@@ -124,4 +124,4 @@ resultMap和ParameterMap书写拼写要使用#{}，resultType 和parameterType�
 ![](http://img.blog.csdn.net/20170307212306148?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvQ1NETl9UZXJlbmNl/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
 
-     一般参数的拼写还是保证统一风格为好，便于人读。
+ [Reference website](http://blog.csdn.net/csdn_terence/article/details/60779889)
