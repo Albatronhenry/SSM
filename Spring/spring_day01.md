@@ -64,7 +64,7 @@
     * 使用IOC可以解决的程序耦合性高的问题！！
 </code></pre>
 
-<p><img src="./图片/01-IOC.bmp" />	</p>
+![ioc](https://github.com/Albatronhenry/UploadFile/blob/master/pic/01-IOC.bmp)
 <pre><code>2. 步骤一：下载Spring框架的开发包
     * 官网：http://spring.io/
     * 下载地址：http://repo.springsource.org/libs-release-local/org/springframework/spring解压:(Spring目录结构:)
