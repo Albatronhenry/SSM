@@ -1,4 +1,4 @@
-###SSM-BeanFactory和ApplicationContext的区别
+### SSM-BeanFactory和ApplicationContext的区别
 
   * BeanFactory               -- BeanFactory采取延迟加载，第一次getBean时才会初始化Bean
         * ApplicationContext        -- 在加载applicationContext.xml时候就会创建具体的Bean对象的实例，还提供了一些其他的功能
