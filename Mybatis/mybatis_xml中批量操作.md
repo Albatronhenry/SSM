@@ -1,6 +1,7 @@
-### mybatis批量操作
+### [mybatis批量操作](https://www.cnblogs.com/yangy608/p/3912580.html)
 
 oracle下支持执行多条语句，下面3个相同,注意` open ` ,  ` close ` 里面的写法
+----------------------
 
 ```xml
 
@@ -46,6 +47,7 @@ oracle下支持执行多条语句，下面3个相同,注意` open ` ,  ` close `
  ```
  
  mysql如下:
+ ---------------------
  
  ```xml
  <update id="batchUpdateStudent" parameterType="List">  
