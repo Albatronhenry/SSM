@@ -2,7 +2,7 @@ springboot简单配置
 ---------------
 基础入门中可以成功启动-->接下来就是创建相关controller包,注意
 
-![bootpck](https://github.com/Albatronhenry/UploadFile/blob/master/bootpck.png)
+![bootpck](https://github.com/Albatronhenry/UploadFile/blob/master/pic/bootpck.png)
 
 编写相应的controller类
 
@@ -36,4 +36,8 @@ public class HelloworldController {
 实现springboot加载图标修改
 
 ![banner](https://github.com/Albatronhenry/UploadFile/blob/master/pic/banner.png)
+
+运行效果如下:
+
+![bootrun](https://github.com/Albatronhenry/UploadFile/blob/master/pic/bootrun.png)
 
