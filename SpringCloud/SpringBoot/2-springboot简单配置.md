@@ -1,4 +1,4 @@
-springboot简单配置
+[springboot简单配置]()
 ---------------
 基础入门中可以成功启动-->接下来就是创建相关controller包,注意
 
