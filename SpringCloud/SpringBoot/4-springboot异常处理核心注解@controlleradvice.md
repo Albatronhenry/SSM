@@ -1,5 +1,6 @@
-[springboot异常处理核心注解@controlleradvice.md]()
+[springboot异常处理核心注解@controlleradvice.md](https://blog.csdn.net/u014044812/article/details/78219692)
 -----------
+* 注意：ControllerAdvice注解 只拦截Controller 不回拦截 Interceptor的异常
 
 ```java
 
