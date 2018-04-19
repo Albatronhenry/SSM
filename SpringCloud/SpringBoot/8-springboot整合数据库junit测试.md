@@ -91,7 +91,7 @@ public class User implements Serializable {
 ```
 * 4.properties文件中添加
 ```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/test
+spring.datasource.url=jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8
 spring.datasource.username=root
 spring.datasource.password=root111
 spring.datasource.driver-class-name=com.mysql.jdbc.Driver
