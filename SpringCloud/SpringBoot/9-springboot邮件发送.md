@@ -7,7 +7,7 @@
 ```properties
 spring.mail.host=smtp.qq.com
 spring.mail.username=mr.lin1994@foxmail.com  //邮箱账号
-spring.mail.password=txqlgjlhrxosbahd        //授权码
+spring.mail.password=txqlxxxxxxxxxxsbahd        //授权码
 spring.mail.default-encoding=UTF-8          
 // [下面三行代码一定要加上,不然会报530的错](https://blog.csdn.net/u011244202/article/details/54809696) 
 spring.mail.properties.mail.smtp.auth=true  
