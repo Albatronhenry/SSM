@@ -1,5 +1,7 @@
 [springboot邮件发送](http://www.ityouknow.com/springboot/2017/05/06/springboot-mail.html)
 ----------------
+#### 开发前提: 对应邮箱的pop3/smtp要开启,并获取相应授权码
+
 * 1.创建一个简单的maven Mail项目
 * 2.在配置文件中添加:
 ```properties
