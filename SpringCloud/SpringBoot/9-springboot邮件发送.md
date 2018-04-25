@@ -6,8 +6,9 @@
 spring.mail.host=smtp.qq.com
 spring.mail.username=mr.lin1994@foxmail.com  //邮箱账号
 spring.mail.password=txqlgjlhrxosbahd        //授权码
-spring.mail.default-encoding=UTF-8
-spring.mail.properties.mail.smtp.auth=true   
+spring.mail.default-encoding=UTF-8          
+// [下面三行代码一定要加上,不然会报530的错](https://blog.csdn.net/u011244202/article/details/54809696) 
+spring.mail.properties.mail.smtp.auth=true  
 spring.mail.properties.mail.smtp.starttls.enable=true
 spring.mail.properties.mail.smtp.starttls.required=true
 mail.fromMail.addr=mr.lin1994@foxmail.com    //发送邮件的邮箱账号
