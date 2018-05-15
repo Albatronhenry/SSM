@@ -111,5 +111,81 @@ spring.http.multipart.max-request-size=100Mb
 ---------------
 
 ### 多文件上传
+* 前端页面添加
+```html
+<p>多文件上传</p>
+<form method="POST" enctype="multipart/form-data" action="/batch/upload"> 
 
+           <p>文件1：<input type="file" name="file" /></p>
+
+           <p>文件2：<input type="file" name="file" /></p>
+
+           <p>文件3：<input type="file" name="file" /></p>
+
+           <p><input type="submit" value="上传" /></p>
+
+       </form>
+```
+* controller类中添加
+```java
+	/**
+	 * 多文件上传,具体上传时，主要是使用了MultipartHttpServletRequest和MultipartFile
+	 */
+	 @RequestMapping(value="/batch/upload", method= RequestMethod.POST) 
+
+	    public@ResponseBody 
+
+	    String handleFileUpload(HttpServletRequest request){ 
+
+	        List<MultipartFile> files = ((MultipartHttpServletRequest)request).getFiles("file"); 
+
+	        MultipartFile file = null;
+
+	        BufferedOutputStream stream = null;
+
+	        for (int i =0; i< files.size(); ++i) { 
+
+	            file = files.get(i); 
+
+	            if (!file.isEmpty()) { 
+
+	                try { 
+
+	                    byte[] bytes = file.getBytes(); 
+	                  //文件上传存放路径
+	    				File filesrc = new File("d:/mutilpartupload/"+file.getOriginalFilename());
+	    				//判断路径是否存在,不存在则创建
+	    				if(!filesrc.getParentFile().exists()){
+	    					filesrc.getParentFile().mkdirs();
+	    				}
+
+	                    stream = 
+
+	                            new BufferedOutputStream(new FileOutputStream(filesrc)); 
+
+	                    stream.write(bytes); 
+
+	                    stream.close(); 
+
+	                } catch (Exception e) { 
+
+	                    stream =  null;
+
+	                    return"上传第 " + (++i) + " 文件失败=> " + e.getMessage(); 
+
+	                } 
+
+	            } else { 
+
+	                return"上传失败,第" + (++i) + " 个文件为空."; 
+
+	            } 
+
+	        } 
+
+	        return "上传成功"; 
+
+	    } 
+```
+* 由于单文件上传/多文件上传均在同一个html文件中,所以访问路径相同
 
