@@ -35,4 +35,4 @@ public class SpringBootImagecodeApplication {
 	}
 }
 ```
-* 访问http://localhost:8080/slf4j,就可以在控制台看到输出信息了
+* 访问  http://localhost:8080/slf4j  就可以在控制台看到输出信息了
