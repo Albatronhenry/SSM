@@ -14,8 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController  //扫描
 public class HelloworldController {
+	/**
+	*@Value获取application.properties/yml文件中的数据值,此种方式已过时,可以在类上面使用@ConfigurationProperties(prefix="henry"),
+	*在启动类中加入：@EnableConfigurationProperties({HelloworldController.class})
+	*参考地址: http://412887952-qq-com.iteye.com/blog/2307104
+	*/
+	@Value("${henry.msg}") 
 	
-	@Value("${henry.msg}")  //获取context/yml文件中的数据值
 	private String msg;
 	
 	@RequestMapping("/henry")
