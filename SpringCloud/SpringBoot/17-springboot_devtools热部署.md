@@ -42,3 +42,8 @@
                 </configuration>  
  ```               
 
+[特别注意](https://www.cnblogs.com/lspz/p/6832358.html)使用IDEA，还需配置idea：
+
+（1）File-Settings-Compiler-Build Project automatically
+
+（2）ctrl + shift + alt + /,选择Registry,勾上 Compiler autoMake allow when app running
