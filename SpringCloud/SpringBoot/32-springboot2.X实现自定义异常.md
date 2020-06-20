@@ -418,7 +418,7 @@ public class SaveBaseForm extends BaseForm{
 	 * @return
 	 */
 	@PostMapping("/save")
-	public Result save(@RequestBody @Valid AccSaveBaseForm form) {
+	public Result save(@RequestBody @Valid SaveBaseForm form) {
     }
 ```
 
