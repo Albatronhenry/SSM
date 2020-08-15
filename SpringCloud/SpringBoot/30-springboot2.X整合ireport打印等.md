@@ -1,10 +1,10 @@
 # springboot2.X整合ireport打印
 
-背景：因项目需要打印相关单据（批量勾选打印，以及打印不能空白）
+背景：因项目需要打印相关单据（批量勾选打印，以及打印不能空白；实现打印水印、签章）
 
 ------
 
-### POM依赖(公网需加载别的依赖)
+### 1.POM依赖(公网需加载别的依赖)
 
 ```xml
 <dependency>
@@ -79,7 +79,7 @@
 		</dependency>
 ```
 
-### PrintHelper工具类
+### 2.PrintHelper工具类
 
 ```java
 package com.*****.ywsp.util;
@@ -224,7 +224,7 @@ public class PrintHelper {
 
 ```
 
-### printController实现
+### 3.printController实现批量打印
 
 ```java
 package com.*****.ywsp.controller;
@@ -382,9 +382,43 @@ public class printController {
 
 [ywsp-zjsbsqs.jasper](https://github.com/Albatronhenry/UploadFile/blob/master/pic/ywsp-zjsbsqs.jasper)
 
+[stamp-watermark.jasper](https://github.com/Albatronhenry/UploadFile/blob/master/pic/ywsp-financeAccApply-wk.jasper)
+
 #### 实现效果：
 
 ![123](https://github.com/Albatronhenry/UploadFile/blob/master/pic/20200403203338.png)
+
+
+
+### 4.实现水印
+
+ireport5制作模版时，模版BackGround板块启用，添加响应水印变量，打印时传入水印变量参数即可实现；
+
+```java
+// 业务中取当前登陆用户名称作为水印
+params.put("waterMark", currentUserInfo.getUserName());
+```
+
+
+
+### 5.实现签章
+
+ireport5制作模版时，插入图片到需要签章位置，图片属性-image Expression配置对应章变量，同时Using cache、Is Lazy 勾选上，最后打印时传入章路径变量即可实现；
+
+在线制章测试地址：[在线制作电子公章](http://www.makepic.net/tool/signet.html)
+
+```java
+/**
+*当前测试取本地项目路径存放图片，实际业务取公章服务器上加密章信息进行解密作为参数传入
+*/
+params.put("stampPath", PrintConstants.JASPER_BASE_PATH +"cs.png");
+```
+
+
+
+#### 4-5 实现效果如下
+
+![stamp-watermark](https://github.com/Albatronhenry/UploadFile/blob/master/pic/QQ20200815113723.png)
 
 
 
@@ -396,19 +430,19 @@ public class printController {
 
 - > 1.新建datasource(数据库连接方式)
   >
-  > ​	1.1如果没有相应数据库的驱动（红色）
-  >
-  > ​		工具--选项--classpath--add jar--选择对应jar包导入即可
+  > 	1.1如果没有相应数据库的驱动（红色）
+  > 	
+  > 		工具--选项--classpath--add jar--选择对应jar包导入即可
   >
   > 2.文件--新建--blank A4
   >
   > 3.自动换行
   >
-  > ​	在可能换行的字段属性面板（右侧）勾选 Stretch With Overflow
-  >
-  > ​	将可能换行的字段的所在行全选，在属性面板里Stretch Type设置为Relative To Tallest Object，
-  >
-  > ​	Print Repeated Values勾选，Print When Detail Overflows 勾选。
+  > 	在可能换行的字段属性面板（右侧）勾选 Stretch With Overflow
+  > 	
+  > 	将可能换行的字段的所在行全选，在属性面板里Stretch Type设置为Relative To Tallest Object，
+  > 	
+  > 	Print Repeated Values勾选，Print When Detail Overflows 勾选。
 
 数据源选择javabean，代码中创建相应javabean打印
 
@@ -424,13 +458,13 @@ public class printController {
 >
 > 2）将模板设计中的文本框的属性中，在font栏中做如下设置：
 >
->    Font Name: 宋体（或其他如楷体）
+> Font Name: 宋体（或其他如楷体）
 >
->    Pdf font name:STSong-Light
+> Pdf font name:STSong-Light
 >
->    Pdf encoding: UniGB-UCS2-H
+> Pdf encoding: UniGB-UCS2-H
 >
->    Pdf Embeded: 打勾
+> Pdf Embeded: 打勾
 >
 > 做以上设置后就OK了
 
@@ -439,4 +473,3 @@ public class printController {
 > 附：iTextAsianCmaps.jar下载
 >
 > http://prdownloads.sourceforge.net/itextpdf/iTextAsianCmaps.jar
-
