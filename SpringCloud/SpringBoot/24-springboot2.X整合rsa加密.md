@@ -5,69 +5,62 @@
 
 后端：
 ```java
-package com.fap.sync.client.common.utils;
+package com.***.abu.ffii.util;
 
+import org.apache.commons.codec.binary.Base64;
 import javax.crypto.Cipher;
-
-import org.apache.tomcat.util.codec.binary.Base64;
-import org.springframework.beans.factory.annotation.Value;
-
-import java.io.ByteArrayOutputStream;
-import java.math.BigInteger;
-import java.security.Key;
 import java.security.KeyFactory;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.RSAPrivateKeySpec;
-import java.security.spec.RSAPublicKeySpec;
- 
+import java.security.spec.X509EncodedKeySpec;
+
+
 /**
- * rsa简单加/解密工具类  
- * @author 
- *
+ * @author linzyc
+ * @desc rsa 加/解密工具类
  */
-public class RSAUtil { 
+public class RSAUtil {
+
+    /** 算法名称 */
+    private static final String ALGORITHM = "RSA";
+    /** 编码格式 */
+    private static final String CHARSET_NAME = "RSA";
+
     /**
-     * 公钥和私钥直接由支付宝加密客户端生成，存在配置文件中
+     * 公钥加密
      */
-    /**
-     * 公钥前台加密，后台不再处理
-     */
-  /*  public static byte[] encryptByPublicKey(byte[] data, RSAPublicKey publicKey) throws Exception {
-      
-    }*/
- 
+    public static String encryptByPublicKey(String data, String publicKey) throws Exception {
+        byte[] decoded = Base64.decodeBase64(publicKey);
+        RSAPublicKey pubKey = (RSAPublicKey) KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(decoded));
+        Cipher cipher = Cipher.getInstance(ALGORITHM);
+        cipher.init(Cipher.ENCRYPT_MODE, pubKey);
+        String outStr = Base64.encodeBase64String(cipher.doFinal(data.getBytes(CHARSET_NAME)));
+        return outStr;
+    }
+
     /**
      * 私钥解密
-     * 前台传过来的加密数据 cipherdata 私钥 privateKey
      */
-    public static String decryptByPrivateKey(String cipherdata,String pKey) throws Exception {
-    	//私钥从配置文件获得
-    	 byte[] data = cipherdata.getBytes();
-    	 byte[] keyBytes = pKey.getBytes();
-    	// 取得私钥
- 		PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(Base64.decodeBase64(keyBytes));
- 		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
- 		Key privateKey = keyFactory.generatePrivate(pkcs8KeySpec);
- 		// 对数据解密
- 		Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
- 		cipher.init(Cipher.DECRYPT_MODE, privateKey);
- 		//返回解密结果
-    	return new String(cipher.doFinal(Base64.decodeBase64(data))); 
+    public static String decryptByPrivateKey(String cipherData, String privateKey) throws Exception {
+        byte[] inputByte = Base64.decodeBase64(cipherData.getBytes(CHARSET_NAME));
+        byte[] decoded = Base64.decodeBase64(privateKey);
+        RSAPrivateKey priKey = (RSAPrivateKey) KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(decoded));
+        Cipher cipher = Cipher.getInstance(ALGORITHM);
+        cipher.init(Cipher.DECRYPT_MODE, priKey);
+        String outStr = new String(cipher.doFinal(inputByte));
+        return outStr;
     }
-  
+
 }
+
 
 ```
 配置文件配置
 ```yml
 rsa:  #公钥私钥
-  publickey: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDUDrwM****JYOGw3BAi+6AhcdBnjo/prNUH/PRA1DUZToAyfHe4F6oSbAY5LvQevgKMWE8t16qNh0++JZbfcZ1WMaTCTyAluLcHHUnNmaE9U9tLF+W9j3G5jea0Eh0tJo579+PcAkWGyy1undwIDAQAB
-  privatekey: MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgE****bDcECL7oCFx0GeOj+ms1Qf89EDUNRlOgDJ8d7gXqhJsBjku9B6+AoxYTy3Xqo2HT74llt9xnVYxpMJPICW4twcdSc2ZoT1T20sX5b2PcbmN5rQSHS0mjnv349wCRYbLLW6d3AgMBAAECgYBf9SsFrFoWPJ8iQlZDzw1D3gpvUaUKK55y8sFH2oBdhN3QRX9DFuaANDulN7xdm2wyFYe1X79WYVzMIItQ+StCF6oilION3OI9OcPqm70yoY/k2hpkaJX82J+t/fhEvbiafl10oX4HxWRkEdu5fsr6PzU+z0eMyH5LbQnRHRYdQQJBAOzz7BsTFnSLP0YfQPt65tt28QtQ6casmfB//FhpPNuEd0RG8Xtogqjlk5H3LPYj42UPtAVjrwX8xxnUhojgk0MCQQDlGoL6DfDW+u31X7Ja1v0EdyTeMzGPb0fSLilF7SGmrPs8IneEpV28BswGPNRcIjklsKfhKd7d41UPx8AfnOW9AkEA0G0S3xHgK62cf6LYNxz5Wkx6ZLjMmbyTQBBkOKSBKpqPilhY63OXktc2AiwIuY4B5JB2ilMPzlV2EMt3d4kLHwJBAKfoATwAQZVdPE7L/uwiijbelw+eV2E2/l0k5azQ+Qut1UciP5Pgmkz2ckrUBBMuJdHgoXkc9bCLLsks7Tp+A8UCQGT6o/SWK4bicxaixAADhCxzmnFIz0lH/LDhJfevRxaMpYWvTyBX5Z9jTz1U8n+0Q73rrHKI65tJWtvr7eu9XTY=
+  publickey: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCG77PYUAcCpANyUmsHJfuDIia9FcITsuu9lnfbE2BbEwd4SOxPBFTwEWTZ9/e+mtjP97KFEBohGkwy+VHE5KocypBv0O7YgEevwMgpvxyYY0v104CB/k0yjCFV7lc7FxY5VgEKrMiXTIkMr1ukCnWVvapvRCS6IFcsT/kkjPgfDQIDAQAB
+  privatekey: MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAIbvs9hQBwKkA3JSawcl+4MiJr0VwhOy672Wd9sTYFsTB3hI7E8EVPARZNn3976a2M/3soUQGiEaTDL5UcTkqhzKkG/Q7tiAR6/AyCm/HJhjS/XTgIH+TTKMIVXuVzsXFjlWAQqsyJdMiQyvW6QKdZW9qm9EJLogVyxP+SSM+B8NAgMBAAECgYEAhj0FH9dNghUE0MCpdS0WL/jTrRxuPQase6mrhyiZnUErF0EExf87OLE1MZr8voRx2UNEOBgyxmfREozyCfyqNg1OdGYEHSyuJ9wglkhq8GVYO8IzI29Mqej0MSprtsE0BPAKBHRU/DWP19ej5bv5ZnAhLs10K7uVEsuGwJJYcMECQQDibedUr7tnGfojyjFY0vCAaVwgS0vXfno7WQyAXUz0Fv8Uy1q9nyF0RrkeA8BOk7S4ljE77ufX0rr2qL7kHW8pAkEAmI718EnQCKKJUjrQUl4iG/lYoNwW2QnxTGZmESyFwkS95PTt8K4GVHpICqRNP1JJBNxVSEVts/eA4zrxPAoBRQJBAJxxEsOQJwq1B/5yVGXqWABgyyYE4AGjgRBAFkMaM3Dx8ouLdMZOi+6qbnwuW0/u/Y4LNzkRd13GWybQsBMrwwECQEULptmavpG55kaWIcS1n+BjSK59DcYrDs+SJK2vJdaXwA4IoEvmpyzCrypJ1EBNYIjXo61y5sSlxuqQua9/o7UCQGYdM3/mF/FEC3wxdfQq0Pw/Pwn8RQxg1natRfoTyzOJDfE/YUYGjIEe2pQtDI1s+IRCwrXOB0cySbpaSHCjr5U=
 
 ```
 
@@ -93,4 +86,4 @@ rsa:  #公钥私钥
 
 ```
 
-
+(REF)[https://blog.csdn.net/qy20115549/article/details/83105736]
