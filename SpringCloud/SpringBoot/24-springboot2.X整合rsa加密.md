@@ -25,14 +25,14 @@ public class RSAUtil {
     /** 算法名称 */
     private static final String ALGORITHM = "RSA";
     /** 编码格式 */
-    private static final String CHARSET_NAME = "RSA";
+    private static final String CHARSET_NAME = "UTF-8";
 
     /**
      * 公钥加密
      */
     public static String encryptByPublicKey(String data, String publicKey) throws Exception {
         byte[] decoded = Base64.decodeBase64(publicKey);
-        RSAPublicKey pubKey = (RSAPublicKey) KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(decoded));
+        RSAPublicKey pubKey = (RSAPublicKey) KeyFactory.getInstance(ALGORITHM).generatePublic(new X509EncodedKeySpec(decoded));
         Cipher cipher = Cipher.getInstance(ALGORITHM);
         cipher.init(Cipher.ENCRYPT_MODE, pubKey);
         String outStr = Base64.encodeBase64String(cipher.doFinal(data.getBytes(CHARSET_NAME)));
@@ -45,7 +45,7 @@ public class RSAUtil {
     public static String decryptByPrivateKey(String cipherData, String privateKey) throws Exception {
         byte[] inputByte = Base64.decodeBase64(cipherData.getBytes(CHARSET_NAME));
         byte[] decoded = Base64.decodeBase64(privateKey);
-        RSAPrivateKey priKey = (RSAPrivateKey) KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(decoded));
+        RSAPrivateKey priKey = (RSAPrivateKey) KeyFactory.getInstance(ALGORITHM).generatePrivate(new PKCS8EncodedKeySpec(decoded));
         Cipher cipher = Cipher.getInstance(ALGORITHM);
         cipher.init(Cipher.DECRYPT_MODE, priKey);
         String outStr = new String(cipher.doFinal(inputByte));
