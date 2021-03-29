@@ -50,7 +50,7 @@ public class AopInterceptController {
 
     /** 使用环绕通知，需要对入参进行特殊处理 */
     @Around(value = "point()")
-    public Result cheakAuthAgencyAndDealRgCode(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Result checkAuthAgencyAndDealRgCode(ProceedingJoinPoint joinPoint) throws Throwable {
         Object[] args = joinPoint.getArgs();
         args[0] = String.valueOf(args[0]).concat(ZERO_STR);
         String rgCode = String.valueOf(args[0]);
