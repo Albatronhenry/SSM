@@ -49,6 +49,21 @@ app:
   version: @version@
 ```
 
+如果yml中通过@@获取报错参考配置,在pom.xml中打开过滤才可以
+
+```xml
+　　<build>
+        <resources>
+            <resource>
+　　　　　　　　　　<!--指定resources插件处理哪个目录下的资源文件-->
+                <directory>src/main/resources</directory>
+　　　　　　　　　　<!--打开资源过滤功能-->
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+```
+
 application.properties
 
 ```properties
