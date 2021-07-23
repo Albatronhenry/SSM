@@ -111,3 +111,42 @@ private volatile static WebClient webClient = null;
     }
 ```
 
+3.原来都是使用springboot的maven/maven-assembly-plugin插件进行打包，但存在一个问题就是打出来的jar包包含依赖于一体，jar包体积会比较大，每次更新jar包需要传输的数据量也就很大了
+通过即使用maven-jar-plugin和maven-dependency-plugin插件可以将应用包和依赖包进行分离，减少jar大小
+```xml
+<plugins>
+            <!-- maven package -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>com.yonyougov.abu.ffii.JxAbuFfiiApplication</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+```
+
