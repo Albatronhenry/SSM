@@ -1,4 +1,4 @@
-### 使用quartz定时任务+stream().parallel()并行流+webClient异步客户端+事务控制
+### 使用quartz定时任务+stream().parallel()并行流+webClient异步客户端+事务控制+maven打包jar包依赖分离
 
 ------
 
@@ -125,7 +125,7 @@ private volatile static WebClient webClient = null;
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.yonyougov.abu.ffii.JxAbuFfiiApplication</mainClass>
+                            <mainClass>com.***.ffii.JxAbuFfiiApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
