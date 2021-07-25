@@ -98,7 +98,7 @@ private volatile static WebClient webClient = null;
 /**
 * 这里获取到webClient并进行请求
 * response.block是阻塞的 response.subscribe是异步回调的
-* 问题：暂不清楚为什么webClient的回调响应抛出异常时，会导致事务不进行回滚，目前采取了别的方案进行处理
+* 问题：暂不清楚为什么webClient的回调subscribe响应抛出异常时，会导致事务不进行回滚，目前采取了block方案进行处理
 更多关于webClient的使用可以查询相关资料进行补充学习，这里只是简单记录
 */
     @SneakyThrows
@@ -107,7 +107,10 @@ private volatile static WebClient webClient = null;
         log.info("exchangeDataByAccounting中参数url: {}，请求方式httpMethod: {},参数data: {}", url, httpMethod, jsonMapper.writeValueAsString(data));
         Mono<Object> response = AccountingCronTask.getWebClient().method(httpMethod).uri(url)
               .contentType(MediaType.APPLICATION_JSON).body(BodyInserters.fromValue(data)).retrieve().bodyToMono(Object.class);
-        response.subscribe(result -> { batchUpdate((Map<String, Object>) result, (Map<String, Object>) data); } );
+              /** 下面这行subscribe异步回调代码，异常未捕获到，导致虽然控制台抛出异常，但是事务并未进行回滚 */
+       // response.subscribe(result -> { batchUpdate((Map<String, Object>) result, (Map<String, Object>) data); } );
+       /*** 使用阻塞 block方法，可以捕获异常进行事务回滚，暂使用block进行处理，影响不大 */
+               batchUpdate((Map<String, Object>) response.block(), (Map<String, Object>) data);
     }
 ```
 
